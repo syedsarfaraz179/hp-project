@@ -1,0 +1,32 @@
+pipeline {
+    agent any
+
+    stages {
+
+        stage('Build') {
+            steps {
+                echo 'Building the project...'
+                // Create a simple file as “build”
+                sh 'echo "Hello World Build" > build.txt'
+            }
+        }
+
+        stage('Test') {
+            steps {
+                echo 'Running tests...'
+                // Simple test: check if build.txt exists
+                sh 'if [ -f build.txt ]; then echo "Test passed"; else echo "Test failed"; exit 1; fi'
+            }
+        }
+
+        stage('Deploy') {
+            steps {
+                echo 'Deploying the project...'
+                // Simple deploy: copy build.txt to deploy folder
+                sh 'mkdir -p deploy && cp build.txt deploy/'
+                sh 'echo "Deployment complete"'
+            }
+        }
+
+    }
+}
